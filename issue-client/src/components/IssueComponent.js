@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './IssueComponent.css';
 
 const IssueComponent = () => {
 
     const [issue, setIssue] = useState({
         id: 1,
-        title: 'Sample Issue',
-        description: 'This is a sample issue.',
+        title: '',
+        description: '',
     });
+
+    const [activeTab, setActiveTab] = useState('create');
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setIssue((prevIssue) => ({ ...prevIssue, [name]: value }));
+    };
 
     const createIssue = async () => {
         try {
@@ -46,12 +54,89 @@ const IssueComponent = () => {
     };
 
     return (
-        <div>
-            <h2>Issue Component</h2>
-            <button onClick={createIssue}>Create Issue</button>
-            <button onClick={readIssue}>Read Issue</button>
-            <button onClick={updateIssue}>Update Issue</button>
-            <button onClick={deleteIssue}>Delete Issue</button>
+        <div className="form-container">
+            <div className="tabs-container">
+                <button
+                    className={`tab-button ${activeTab === 'create' && 'active'}`}
+                    onClick={() => setActiveTab('create')}
+                >
+                    Create Issue
+                </button>
+                <button
+                    className={`tab-button ${activeTab === 'update' && 'active'}`}
+                    onClick={() => setActiveTab('update')}
+                >
+                    Update Issue
+                </button>
+                <button
+                    className={`tab-button ${activeTab === 'read' && 'active'}`}
+                    onClick={() => setActiveTab('read')}
+                >
+                    Read Issue
+                </button>
+                <button
+                    className={`tab-button ${activeTab === 'delete' && 'active'}`}
+                    onClick={() => setActiveTab('delete')}
+                >
+                    Delete Issue
+                </button>
+            </div>
+
+            <div className="tab-content">
+                {activeTab === 'create' && (
+                    <form>
+                        <label>
+                            Title:
+                            <input type="text" name="title" value={issue.title} onChange={handleInputChange}/>
+                        </label>
+                        <label>
+                            Description:
+                            <textarea name="description" value={issue.description} onChange={handleInputChange}/>
+                        </label>
+                        <button type="button" onClick={createIssue}>
+                            Create Issue
+                        </button>
+                    </form>
+                )}
+
+                {activeTab === 'update' && (
+                    <form>
+                        <label>
+                            Issue ID to Update:
+                            <input type="number" name="id" value={issue.id} onChange={handleInputChange}/>
+                        </label>
+                        <label>
+                            Updated Title:
+                            <input type="text" name="title" value={issue.title} onChange={handleInputChange}/>
+                        </label>
+                        <label>
+                            Updated Description:
+                            <textarea name="description" value={issue.description} onChange={handleInputChange}/>
+                        </label>
+                        <button type="button" onClick={updateIssue}>
+                            Update Issue
+                        </button>
+                    </form>
+                )}
+
+                {activeTab === 'read' && (
+                    <button type="button" onClick={readIssue}>
+                        Read Issue
+                    </button>
+                )}
+
+                {activeTab === 'delete' && (
+                    <form>
+                        <label>
+                            Issue ID to Delete:
+                            <input type="number" name="id" value={issue.id} onChange={handleInputChange}/>
+                        </label>
+                        <button type="button" onClick={deleteIssue}>
+                            Delete Issue
+                        </button>
+                    </form>
+                )}
+            </div>
         </div>
     )
 }
