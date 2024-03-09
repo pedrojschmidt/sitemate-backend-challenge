@@ -19,7 +19,12 @@ const IssueComponent = () => {
     };
 
     const readIssue = async () => {
-
+        try {
+            const response = await axios.get('http://localhost:8080/issues');
+            console.log('Read Issue Response:', response.data);
+        } catch (error) {
+            console.error('Error reading issue:', error);
+        }
     };
 
     const updateIssue = async () => {
