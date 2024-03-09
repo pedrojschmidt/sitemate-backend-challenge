@@ -25,7 +25,8 @@ public class IssueController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Issue> updateIssue(@PathVariable Long id, @RequestBody Issue updatedIssue) {
-        return null;
+        System.out.println("Updating Issue with ID " + id + ": " + updatedIssue);
+        return new ResponseEntity<>(updatedIssue, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
