@@ -10,7 +10,12 @@ const IssueComponent = () => {
     });
 
     const createIssue = async () => {
-
+        try {
+            const response = await axios.post('http://localhost:8080/issues', issue);
+            console.log('Create Issue Response:', response.data);
+        } catch (error) {
+            console.error('Error creating issue:', error);
+        }
     };
 
     const readIssue = async () => {
