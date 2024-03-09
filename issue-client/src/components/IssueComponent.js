@@ -37,7 +37,12 @@ const IssueComponent = () => {
     };
 
     const deleteIssue = async () => {
-
+        try {
+            const response = await axios.delete(`http://localhost:8080/issues/${issue.id}`);
+            console.log('Delete Issue Response:', response.data);
+        } catch (error) {
+            console.error('Error deleting issue:', error);
+        }
     };
 
     return (
