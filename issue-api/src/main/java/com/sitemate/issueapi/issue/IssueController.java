@@ -10,7 +10,8 @@ public class IssueController {
 
     @PostMapping
     public ResponseEntity<Issue> createIssue(@RequestBody Issue issue) {
-        return null;
+        System.out.println("Creating Issue: " + issue);
+        return new ResponseEntity<>(issue, HttpStatus.CREATED);
     }
 
     @GetMapping
