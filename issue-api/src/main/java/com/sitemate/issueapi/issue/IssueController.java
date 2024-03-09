@@ -16,7 +16,11 @@ public class IssueController {
 
     @GetMapping
     public ResponseEntity<Issue> readIssue() {
-        return null;
+        Issue sampleIssue = new Issue();
+        sampleIssue.setId(1L);
+        sampleIssue.setTitle("Sample Issue");
+        sampleIssue.setDescription("This is a sample issue.");
+        return new ResponseEntity<>(sampleIssue, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
