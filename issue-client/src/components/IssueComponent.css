@@ -70,3 +70,11 @@
     display: flex;
     justify-content: center;
 }
+
+.response-box {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #e0f7fa;
+    border: 1px solid #80deea;
+    border-radius: 5px;
+}

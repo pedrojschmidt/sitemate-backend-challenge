@@ -11,45 +11,53 @@ const IssueComponent = () => {
     });
 
     const [activeTab, setActiveTab] = useState('create');
+    const [responseMessage, setResponseMessage] = useState('');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setIssue((prevIssue) => ({ ...prevIssue, [name]: value }));
     };
 
+    const handleResponse = (message) => {
+        setResponseMessage(message);
+        setTimeout(() => {
+            setResponseMessage('');
+        }, 2000);
+    };
+
     const createIssue = async () => {
         try {
             const response = await axios.post('http://localhost:8080/issues', issue);
-            console.log('Create Issue Response:', response.data);
+            handleResponse(`Create Issue Response: ${JSON.stringify(response.data)}`);
         } catch (error) {
-            console.error('Error creating issue:', error);
+            handleResponse(`Error creating issue: ${error.message}`);
         }
     };
 
     const readIssue = async () => {
         try {
             const response = await axios.get('http://localhost:8080/issues');
-            console.log('Read Issue Response:', response.data);
+            handleResponse(`Read Issue Response: ${JSON.stringify(response.data)}`);
         } catch (error) {
-            console.error('Error reading issue:', error);
+            handleResponse(`Error reading issue: ${error.message}`);
         }
     };
 
     const updateIssue = async () => {
         try {
             const response = await axios.put(`http://localhost:8080/issues/${issue.id}`, issue);
-            console.log('Update Issue Response:', response.data);
+            handleResponse(`Update Issue Response: ${JSON.stringify(response.data)}`);
         } catch (error) {
-            console.error('Error updating issue:', error);
+            handleResponse(`Error updating issue: ${error.message}`);
         }
     };
 
     const deleteIssue = async () => {
         try {
-            const response = await axios.delete(`http://localhost:8080/issues/${issue.id}`);
-            console.log('Delete Issue Response:', response.data);
+            await axios.delete(`http://localhost:8080/issues/${issue.id}`);
+            handleResponse(`Delete Issue Successful`);
         } catch (error) {
-            console.error('Error deleting issue:', error);
+            handleResponse(`Error deleting issue: ${error.message}`);
         }
     };
 
@@ -137,6 +145,11 @@ const IssueComponent = () => {
                     </form>
                 )}
             </div>
+            {responseMessage && (
+                <div className="response-box">
+                    <p>{responseMessage}</p>
+                </div>
+            )}
         </div>
     )
 }
