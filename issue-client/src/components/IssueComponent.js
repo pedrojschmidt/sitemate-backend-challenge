@@ -28,7 +28,12 @@ const IssueComponent = () => {
     };
 
     const updateIssue = async () => {
-
+        try {
+            const response = await axios.put(`http://localhost:8080/issues/${issue.id}`, issue);
+            console.log('Update Issue Response:', response.data);
+        } catch (error) {
+            console.error('Error updating issue:', error);
+        }
     };
 
     const deleteIssue = async () => {
